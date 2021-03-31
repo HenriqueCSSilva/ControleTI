@@ -49,6 +49,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
 
             cur.execute(sql_Insert)
             conn.commit()
+            conn.close()
             QMessageBox.about(self, "Sucesso", "Dados Inseridos")
         except Exception as erro:
             print(erro)
@@ -68,7 +69,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
         emailOff = self.txtLicencaOff.text()
         chaveOff = self.txtEmailOff.text()
         numOff = self.txtNumOff.text()
-        
+
         try:
             sql_Update = (f"update tb_base  set "
                           f"nome_colaborador = '{nomeColab}', "
@@ -87,8 +88,10 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
 
             cur.execute(sql_Update)
             conn.commit()
+            conn.close()
             QMessageBox.about(self, "Sucesso", "Dados Atualozados")
         except Exception as erro:
+            QMessageBox.about(self, "Update", "Dados NãoGravados")
             print(erro)
 
 
@@ -136,6 +139,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
 
         except Exception as erro:
             print(sql_Select)
+            QMessageBox.about(self, "Read", "Falha ao Recupear")
             print(erro)
 
 
