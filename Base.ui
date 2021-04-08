@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>943</width>
-    <height>550</height>
+    <width>939</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>901</width>
+      <width>931</width>
       <height>531</height>
      </rect>
     </property>
@@ -27,7 +27,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -41,6 +41,9 @@
         <width>251</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>Marcos Cobaia</string>
       </property>
      </widget>
      <widget class="QLabel" name="label">
@@ -1825,7 +1828,7 @@
        <rect>
         <x>20</x>
         <y>240</y>
-        <width>851</width>
+        <width>901</width>
         <height>261</height>
        </rect>
       </property>
@@ -1869,6 +1872,11 @@
         <string>Descricao</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>Tempo</string>
+       </property>
+      </column>
      </widget>
      <widget class="QLineEdit" name="txtPrazo">
       <property name="geometry">
@@ -1888,7 +1896,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>943</width>
+     <width>939</width>
      <height>21</height>
     </rect>
    </property>

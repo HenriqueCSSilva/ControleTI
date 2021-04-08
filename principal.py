@@ -37,6 +37,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
         self.tbBase.setItem(0,0,QTableWidgetItem(''))
 
 
+
         sql_area = "SELECT desc_area FROM tb_area "
         loadArea = pd.read_sql(sql_area, conn).values.tolist()
         for i in loadArea:
@@ -44,7 +45,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
             self.ddlArea.addItem(item)
             self.ddlBaseArea.addItem(item)
 
-
+#------------Geral---------#
     def inserirForm(self):
         conn = pymysql.connect(host=var.host, port=3306, user=var.user,
                                password=var.password, db=var.db)
@@ -59,7 +60,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
         unidade = self.ddlUnidade.currentText()
         statusColab = self.ddlStatusColab.currentText()
         telefone = self.txtTelefone.text()
-        licencaOff =  self.txtLicencaOff.text()
+        licencaOff = self.txtLicencaOff.text()
         emailOff = self.txtLicencaOff.text()
         chaveOff = self.txtEmailOff.text()
         numOff = self.txtNumOff.text()
@@ -69,12 +70,12 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
                           f"telefone,area_colab,unidade_colab,status_colab,licenca_off,email_off,numero_off,chave_off        )"
                           f" VALUES ('{nomeColab}','{cpf_rg}','{email}','{anydesk}','{patrimonio}','{telefone}',"
                           f"'{area}','{unidade}','{statusColab}','{licencaOff}','{emailOff}','{chaveOff}','{numOff}')")
-
             cur.execute(sql_Insert)
             conn.commit()
             conn.close()
             QMessageBox.about(self, "Sucesso", "Dados Inseridos")
         except Exception as erro:
+            QMessageBox.about(self, "Falha", "Falha ao Gravar")
             print(erro)
 
     def updateFomr(self):
@@ -130,12 +131,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
             nomeColab = self.txtNomeColaborador.text().upper().strip()
             email = self.txtEmailOff.text().strip()
             telefone = self.txtTelefone.text().strip()
-
-
-
-            sql_Select = (f"SELECT * from tb_base where   nome_colaborador =  UPPER('{nomeColab[0]}')")
-
-
+            sql_Select = (f"SELECT * from tb_base where  UPPER(nome_colaborador)= '{nomeColab}'")
             tabela =  pd.read_sql(sql_Select,conn)
             lista = tabela.values.tolist()
             id = str(lista[0][0])
@@ -145,13 +141,23 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
             anydesk = lista[0][4]
             patrimonio = lista[0][5]
             telefone = lista[0][6]
-            '''area_colab = lista[0][7]
+
+            area_colab = lista[0][7]
             unidade_colab = lista[0][8]
-            status_colab = lista[0][9]'''
+            status_colab = lista[0][9]
+
             licenca_off = lista[0][10]
             email_off = lista[0][11]
             numero_off = lista[0][12]
-            chave_off =  lista[0][13]
+            chave_off = lista[0][13]
+
+            programas = lista[0][14]
+            brics = list(programas)
+
+            print(programas)
+            print(brics)
+
+
 
             #QMessageBox.about(self, "Sucesso", "Dados Inseridos")
             self.txtNomeColaborador.setText(nome_colaborador)
@@ -175,6 +181,22 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
             print(erro)
 
 
+    def limpar(self):
+        self.txtNomeColaborador.setText('')
+        self.txtEmail.setText('')
+        self.txtCPF.setText('')
+        self.txtTelefone.setText('')
+        self.txtAnyDesk.setText('')
+        self.txtPatrimonio.setText('')
+        self.txtLicencaOff.setText('')
+        self.txtEmailOff.setText('')
+        self.txtNumOff.setText('')
+        self.txtChaveOff.setText('')
+
+
+#-----------------------------Base--------------------#
+
+
 
 
     def buscaBase(self):
@@ -183,7 +205,7 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
         cur = conn.cursor()
 
         try:
-            nome = self.txtBaseNomeColaborador.text().upper().split()
+            nome = self.txtBaseNomeColaborador.text().upper()
             sql_Select = (f"SELECT * from tb_base where   nome_colaborador like  UPPER('%{nome[0]}%')")
             tabela = pd.read_sql(sql_Select, conn)
             lista = tabela.values.tolist()
@@ -211,6 +233,11 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
             email_off = lista[0][11]
             numero_off = lista[0][12]
             chave_off =  lista[0][13]'''
+
+
+            '''if self.addCheckDB.isChecked():
+                self.addCheck.setChecked(False)'''
+
             row = 0
             for i in lista:
                 self.tbBase.insertRow(row)
@@ -224,6 +251,10 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
                 row = row+1
         except Exception as erro:
             print(erro)
+
+
+
+#------------------------------Tarefas----------------------------#
     def gravarDemanda(self):
 
         conn = pymysql.connect(host=var.host, port=3306, user=var.user,
@@ -272,7 +303,6 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
                 beneficiado = i[6]
                 prazo = i[7]
                 descricao = i[8]
-
                 self.tbDemanda.insertRow(row)
                 self.tbDemanda.setItem(row, 0, QTableWidgetItem(cod ))
                 self.tbDemanda.setItem(row, 1, QTableWidgetItem(categoria))
@@ -290,17 +320,11 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
         conn.commit()
         conn.close()
 
-    def limpar(self):
-        self.txtNomeColaborador.setText('')
-        self.txtEmail.setText('')
-        self.txtCPF.setText('')
-        self.txtTelefone.setText('')
-        self.txtAnyDesk.setText('')
-        self.txtPatrimonio.setText('')
-        self.txtLicencaOff.setText('')
-        self.txtEmailOff.setText('')
-        self.txtNumOff.setText('')
-        self.txtChaveOff.setText('')
+
+
+
+
+
 
 if __name__ == '__main__':
     qt = QApplication(sys.argv)
