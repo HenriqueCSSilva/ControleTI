@@ -37,7 +37,6 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
         self.tbBase.setItem(0,0,QTableWidgetItem(''))
 
 
-
         sql_area = "SELECT desc_area FROM tb_area "
         loadArea = pd.read_sql(sql_area, conn).values.tolist()
         for i in loadArea:
@@ -156,9 +155,6 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
 
             print(programas)
             print(brics)
-
-
-
             #QMessageBox.about(self, "Sucesso", "Dados Inseridos")
             self.txtNomeColaborador.setText(nome_colaborador)
             self.txtCPF.setText(cpf_rg)
