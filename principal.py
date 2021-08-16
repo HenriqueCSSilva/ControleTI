@@ -12,8 +12,6 @@ from PyQt5.QtWidgets import QTableWidgetItem,QVBoxLayout,QInputDialog
 conn = pymysql.connect(host=var.host, port=3306, user=var.user,
                                password=var.password, db=var.db)
 cur = conn.cursor()
-
-
 class ProjSuporte(QMainWindow, Ui_MainWindow):
 
     print('conexao ok')
@@ -46,8 +44,8 @@ class ProjSuporte(QMainWindow, Ui_MainWindow):
 
 #------------Geral---------#
     def inserirForm(self):
-        conn = pymysql.connect(host=var.host, port=3306, user=var.user,
-                               password=var.password, db=var.db)
+        conn = pymysql.connect(host='satelpjcera.com',
+         port=3306, user='marcos_0111'.user,password='senha', db=var.db)
         cur = conn.cursor()
 
         nomeColab = self.txtNomeColaborador.text()
